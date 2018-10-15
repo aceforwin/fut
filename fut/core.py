@@ -613,6 +613,9 @@ class Core(object):
             raise FutError('multiple session')
         if rc.status_code == 500:
             raise InternalServerError('Servers are probably temporary down.')
+        if rc.status_code == 503:
+            raise FutError('Early access has expired')
+
         rc = rc.json()
         if rc.get('reason') == 'multiple session':
             raise MultipleSession
